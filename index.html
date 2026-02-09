@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siyah Minibüs Derneği | Başvuru</title>
+    <!-- Modern ve şık bir font ekliyoruz -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;800&display=swap" rel="stylesheet">
+    <style>
+        /* Temel Ayarlar */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #050505; /* Simsiyah zemin */
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Hafif bir doku/gradient ekleyelim ki dümdüz durmasın */
+            background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #000000 100%);
+        }
+
+        /* Ana Kart Tasarımı */
+        .container {
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px); /* Arkası bulanık cam efekti */
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Üstteki ince kırmızı çizgi detayı */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ff0000, transparent);
+            opacity: 0.7;
+        }
+
+        /* Başlık Stili */
+        h1 {
+            font-size: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            background: -webkit-linear-gradient(#fff, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Form Elemanları */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 8px;
+            margin-left: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #666;
+            background: #111;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+        }
+
+        /* Gönder Butonu */
+        button {
+            width: 100%;
+            padding: 16px;
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Başarı Mesajı (Gizli) */
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid #004d00;
+            color: #4caf50;
+            font-size: 14px;
+            font-weight: 500;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* İkon */
+        .success-icon {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobil Uyum */
+        @media (max-width: 600px) {
+            .container {
+                width: 90%;
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Siyah Minibüs Derneği</h1>
+        
+        <form id="basvuruFormu">
+            <div class="form-group">
+                <label for="name">İsim Soyisim</label>
+                <input type="text" id="name" placeholder="Adınızı giriniz..." autocomplete="off" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Başvuru Metni</label>
+                <textarea id="message" rows="4" placeholder="Neden katılmak istiyorsunuz?" required></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn">GÖNDER</button>
+        </form>
+
+        <div class="success-message" id="successMsg">
+            <span class="success-icon">✓</span>
+            Başvurunuz sisteme kaydedildi.
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('basvuruFormu');
+        const successMsg = document.getElementById('successMsg');
+        const btn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Sayfa yenilenmesini engelle
+
+            // Buton animasyonu
+            const originalText = btn.innerText;
+            btn.innerText = "İşleniyor...";
+            btn.style.opacity = "0.7";
+            btn.disabled = true;
+
+            // Yapay bir bekleme süresi (1.5 saniye)
+            setTimeout(() => {
+                // Formu gizle (opsiyonel, istersen kalabilir)
+                form.style.display = 'none';
+                
+                // Mesajı göster
+                successMsg.style.display = 'block';
+
+                // Konsola da log atalım
+                console.log("Form gönderildi (Simülasyon)");
+                
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
+
+
