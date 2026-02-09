@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siyah Minibüs Derneği | Yönetim</title>
+    <title>Siyah Minibüs Derneği - hizliyimSystems</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         /* --- GENEL STİLLER --- */
@@ -512,7 +512,7 @@
             const replyText = document.getElementById(`text-${docId}`).value;
             if (!replyText) return;
 
-            const authorName = window.currentRole === 'superadmin' ? 'Alicimmmm (Yönetici)' : 'Hasan (Yönetici)';
+            const authorName = window.currentRole === 'superadmin' ? 'A.Ç. (Yönetici)' : 'H.T. (Yönetici)';
 
             try {
                 const docRef = doc(db, "messages", docId);
@@ -530,7 +530,7 @@
         }
 
         window.deleteMessage = async (docId) => {
-            if (!confirm("Bu mesajı sonsuza kadar silmek istediğine emin misin balım?")) return;
+            if (!confirm("Bu mesajı sonsuza kadar silmek istediğine emin misin?")) return;
 
             try {
                 await deleteDoc(doc(db, "messages", docId));
